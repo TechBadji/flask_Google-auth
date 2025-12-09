@@ -1,0 +1,14 @@
+# Environnement virtuel Python
+.venv/
+venv/
+env/
+.flask_venv/
+# Fichiers de cache Python
+__pycache__/
+*.pyc
+
+# Fichiers spécifiques au système d'exploitation ou à l'éditeur
+.DS_Store
+.vscode/
+.intance/
+.idea/

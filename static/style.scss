@@ -1,0 +1,138 @@
+//Variables
+$primary-color: #3498db;
+$secondary-color: #2ecc71;
+$primary-hover-color: darken($primary-color, 10%);
+$secondary-hover-color: darken($secondary-color, 10%);
+$font-stack: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$border-radius: 4px;
+$padding: 10px 15px;
+$margin-bottom: 15px;
+$box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+$error-color: #e74c3c;
+$success-color: #27ae60;
+$warning-color: #f39c12;
+$info-color: #2980b9;
+$input-border-color: #ccc;
+$input-focus-border-color: $primary-color;  
+$button-hover-darken: 10%;
+$transition-duration: 0.3s;
+$transition-ease: ease-in-out;
+$max-width: 400px;
+$background-color: #f0f8ff;
+$text-color: #333;
+$label-color: #555;
+$placeholder-color: #999;
+$disabled-bg-color: #e0e0e0;
+$disabled-text-color: #aaa;
+$container-bg-color: #ffffff;
+$subtext-color: #666;
+
+
+body{
+    background-color: wheat;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: $text-color;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    text-align: center;
+
+}
+header{
+    background-color: $container-bg-color;
+    padding: 20px 0;
+    width: 100%;
+    box-shadow: $box-shadow;
+
+    h1{
+        margin: 0;
+        color: $text-color;
+        font-size: 2.5em;
+    }
+
+}
+main{
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+}
+
+.container{
+    background-color: $container-bg-color;
+    padding: 30px;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+    width: 100%;
+    max-width: $max-width;
+    margin: 50px auto;
+
+    h1{
+        margin-bottom: 1.5em;
+        color: $text-color;
+        font-size: 2.5em;
+    }
+    P{
+        color: $subtext-color;
+        margin-bottom: 20px;
+        font-size: 18px;
+    }
+
+    .input-field{
+        width: 100%;
+        margin: 10px 0;
+        padding: 10px;
+        border: 1px solid $input-border-color;
+        border-radius: $border-radius;
+        font-size: 1.5rem;
+        box-sizing: border-box;
+
+        &:focus{
+            border-color: $input-focus-border-color;
+            outline: none;
+            box-shadow: 0 0 5px rgba($primary-color, 0.5);
+        }
+
+    }
+    .btn{
+        width: 100%;
+        padding: 10px;
+        margin: 10px ;
+        border: none;
+        border-radius: $border-radius;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color $transition-duration $transition-ease;
+
+        &.btn-login{
+            background-color: $primary-color;
+            color: #fff;
+
+            &:hover{
+                background-color:$primary-hover-color;
+            }
+        }
+        &.btn-register{
+            background-color: $secondary-color;
+            color: #fff;
+
+            &:hover{
+                background-color:$secondary-hover-color;
+            }
+        }
+        &.btn-logout{
+            background-color: $primary-color;
+            color: #fff;
+
+            &:hover{
+                background-color: $primary-hover-color;
+            }
+        }
+    }
+
+}
+
