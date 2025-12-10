@@ -94,4 +94,11 @@ main {
 }
 .container .btn.btn-logout:hover {
   background-color: rgb(33.1380753138, 125.1882845188, 186.8619246862);
+}
+.container .btn.btn-google {
+  background-color: coral;
+  color: #fff;
+}
+.container .btn.btn-google:hover {
+  background-color: rgb(255, 89.6971428571, 29);
 }/*# sourceMappingURL=style.css.map */

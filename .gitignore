@@ -2,6 +2,7 @@
 .venv/
 venv/
 env/
+.env
 .flask_venv/
 # Fichiers de cache Python
 __pycache__/

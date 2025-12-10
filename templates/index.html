@@ -10,6 +10,7 @@
                <input type="password" name="password" placeholder="Password" class="input-field">
                <input type="submit" value="Login" class="btn btn-login" onclick="setActionForm('login')">
                <input type="button" value="Register" class="btn btn-register" onclick="setActionForm('register')">
+               <input type="button" value="Login with Google" class="btn btn-google" onclick="setActionForm('google')">        
             </form>
 
     </div>
@@ -21,6 +22,8 @@
                authForm.action = "{{url_for('login')}}";
             } else if(form === 'register'){
                authForm.action = "{{url_for('register')}}";
+            }else if(form === 'google'){
+               authForm.action = "{{url_for('login_google')}}";
             }
             authForm.submit();
        }

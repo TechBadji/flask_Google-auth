@@ -132,6 +132,14 @@ main{
                 background-color: $primary-hover-color;
             }
         }
+        &.btn-google{
+            background-color: coral;
+            color: #fff;
+
+            &:hover{
+                background-color: darken(coral, $button-hover-darken);
+            }
+        }
     }
 
 }

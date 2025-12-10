@@ -1,10 +1,11 @@
 from flask import Flask, render_template, request, redirect, session, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
+from authlib.integrations.flask_client import OAuth
+from api_key import CLIENT_ID, CLIENT_SECRET   
 
 app = Flask(__name__)
-
-app.secret_key = 'your_secret_key'
+app.secret_key = CLIENT_SECRET
 
 # Configuration SQLAlchemy
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
@@ -12,19 +13,30 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
+oauth = OAuth(app)
+
+google = oauth.register(
+    name='google',
+    client_id=CLIENT_ID,
+    client_secret=CLIENT_SECRET,
+    client_kwargs={'scope': 'openid email profile'},   
+    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration' 
+)
+
+
+
+
 # Database Model
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), unique=True, nullable=False)
-    password_hash = db.Column(db.String(150), nullable=False)
+    password_hash = db.Column(db.String(150), nullable=True)
     
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
         
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
-
-
 
 # Routes
 @app.route('/')
@@ -89,11 +101,38 @@ def logout():
     # Suppression de l'entrée 'username' de la session
     session.pop('username', None) 
     # Redirection vers la page d'accueil
-    return render_template('index.html')
+    return redirect(url_for('home'))
 
+# OAuth Login Route
+@app.route('/login/google', methods=['GET', 'POST'])
+def login_google():
+    try:
+        redirect_uri = url_for('authorize_google', _external=True)
+        return google.authorize_redirect(redirect_uri)
+    except Exception as e:
+        return f"An error occurred during Google login: {str(e)}"
 
-
-
+@app.route('/authorize/google')
+def authorize_google():
+   
+        token = google.authorize_access_token()
+        userinfo_endpoint = google.server_metadata['userinfo_endpoint']
+        resp = google.get(userinfo_endpoint)
+        user_info = resp.json()
+        username = user_info['email']
+        
+        user = User.query.filter_by(username=username).first()
+        if not user:
+            user = User(username=username)
+            user.set_password('')  # No password for OAuth users
+            db.session.add(user)
+            db.session.commit()
+        
+        session['username'] = username
+        session['oauth_token'] = token
+        return redirect(url_for('dashboard'))
+ 
+ 
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
